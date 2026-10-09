@@ -1,1 +1,11 @@
-
+USE CollegeDB;
+CREATE TABLE Department ( DepartmentID INT PRIMARY KEY, DepartmentName VARCHAR(50), HOD VARCHAR(50) );
+CREATE TABLE Student ( StudentID INT PRIMARY KEY, StudentName VARCHAR(50), Gender VARCHAR(10), DepartmentID INT, FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID) );
+CREATE TABLE Faculty ( FacultyID INT PRIMARY KEY, FacultyName VARCHAR(50), DepartmentID INT, FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID) );
+CREATE TABLE Course ( CourseID INT PRIMARY KEY, CourseName VARCHAR(100), Credits INT, DepartmentID INT, FacultyID INT, FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID), FOREIGN KEY (FacultyID) REFERENCES Faculty(FacultyID) );
+CREATE TABLE Enrollment ( EnrollmentID INT PRIMARY KEY, StudentID INT, CourseID INT, FOREIGN KEY (StudentID) REFERENCES Student(StudentID), FOREIGN KEY (CourseID) REFERENCES Course(CourseID) );
+INSERT INTO Department (DepartmentID, DepartmentName, HOD) VALUES (101, 'Computer Science', 'Ravi'), (102, 'Information Technology', 'Priya'), (103, 'Electronics', 'Kumar');
+INSERT INTO Student (StudentID, StudentName, Gender, DepartmentID) VALUES (1001, 'Arun', 'Male', 101), (1002, 'Divya', 'Female', 102), (1003, 'Karthik', 'Male', 101), (1004, 'Nisha', 'Female', 103);
+INSERT INTO Faculty (FacultyID, FacultyName, DepartmentID) VALUES (1, 'Meena', 101), (2, 'Suresh', 102), (3, 'Lakshmi', 103);
+INSERT INTO Course (CourseID, CourseName, Credits, DepartmentID, FacultyID) VALUES (201, 'Database Systems', 4, 101, 1), (202, 'Data Structures', 3, 101, 1), (203, 'Mathematics', 4, 102, 2), (204, 'Computer Networks', 3, 103, 3);
+INSERT INTO Enrollment (EnrollmentID, StudentID, CourseID) VALUES (1, 1001, 201), (2, 1001, 202), (3, 1002, 203), (4, 1003, 201), (5, 1004, 204);
